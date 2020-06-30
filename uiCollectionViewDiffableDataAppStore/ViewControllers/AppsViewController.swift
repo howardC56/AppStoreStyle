@@ -24,6 +24,7 @@ class AppsViewController: UIViewController {
         appsView.collectionView.collectionViewLayout = createCompositionalLayout()
         navigationItem.title = "Apps"
         navigationController?.navigationBar.prefersLargeTitles = true
+        appsView.collectionView.delegate = self
     }
     
     func configure<T: SelfConfiguringCell>(_ cellType: T.Type, with app: App, for indexPath: IndexPath) -> T {
@@ -82,7 +83,13 @@ class AppsViewController: UIViewController {
         layout.configuration = configuration
         return layout
     }
-    
-    
+
+}
+
+extension AppsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selected = dataSource?.itemIdentifier(for: indexPath) else { return }
+        print(selected)
+    }
 }
 
